@@ -3,6 +3,7 @@ package com.worldpay.offers;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -34,7 +35,7 @@ public class OfferControllerTest {
 	@Test
 	public void offer_should_be_return() throws Exception {
 
-		this.mockMvc.perform(get("/offers/1")).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$").isMap());
+		this.mockMvc.perform(get("/offers/5")).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$").isMap());
 	}
 
 	@Test
@@ -59,7 +60,7 @@ public class OfferControllerTest {
 
 
 	@Test
-	public void updateOffer() throws Exception {
+	public void update_offer() throws Exception {
 
 		try {
 			mockMvc.perform(put("/offers")
@@ -75,5 +76,28 @@ public class OfferControllerTest {
 		
 		this.mockMvc.perform(get("/offers")).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$").isArray()).andExpect(jsonPath("$[0].price").value("234.56"));
 	}
+	
+	@Test
+	public void update_offer_with_invalid_id() throws Exception {
 
+		try {
+			mockMvc.perform(put("/offers")
+					.param("productId","999999")
+					.param("productName","productName")
+					.param("productDescription","productDescription")
+					.param("price","234.56")
+					.param("currency","EUR")
+					).andDo(print()).andExpect(status().is4xxClientError());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	@Test
+	public void delete_offer() throws Exception {
+		this.mockMvc.perform(delete("/offers/1")).andDo(print()).andExpect(status().isOk());
+		this.mockMvc.perform(get("/offers/1")).andDo(print()).andExpect(status().is4xxClientError());
+	}
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.worldpay.exception.OfferNotFoundException;
 import com.worldpay.offers.Offer;
 import com.worldpay.offers.OfferRepository;
 
@@ -31,12 +32,18 @@ public class OfferServiceTest {
 		assertNotNull( offer.getProductId());
 	}
 	
-	@Test
-	public void update_a_offer() {
+	@Test(expected = OfferNotFoundException.class)
+	public void update_a_offer_with_invalid_id() {
 		Offer offer=new Offer("productName","productDescription",BigDecimal.ZERO,OFFER_CURRENCY);
 		offer.setProductId(System.currentTimeMillis());
 		offer=offerService.updateOffer(offer);
-		assertNotNull( offer.getProductId());
+	}
+	
+	@Test
+	public void delete_a_offer() {
+		
+		offerService.deleteOffer(123456789l);
+		 
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
