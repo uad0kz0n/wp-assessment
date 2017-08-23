@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.worldpay.exception.OfferNotFoundException;
+
 @Service
 public class OfferServiceImpl implements OfferService {
 	
@@ -48,7 +50,24 @@ public class OfferServiceImpl implements OfferService {
 		if(offer==null || offer.getProductId() ==null) {
 			throw new IllegalArgumentException("a offer is invalid");
 		}
+		Offer existence = offerRepository.findOne(offer.getProductId());
+		
+		if(existence==null) {
+			throw new OfferNotFoundException(offer.getProductId());
+		}
+		
 		offer=offerRepository.save(offer);
 		return offer;
+	}
+
+
+
+	@Override
+	public void deleteOffer(Long productId) {
+		if(productId==null) {
+			throw new IllegalArgumentException("a offer is invalid");
+		}
+		offerRepository.delete(productId);
+		
 	}
 }

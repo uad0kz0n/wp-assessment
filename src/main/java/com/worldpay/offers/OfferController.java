@@ -27,11 +27,23 @@ public class OfferController {
 		}
 		
 	}
-	
 	@RequestMapping(value="",method=RequestMethod.PUT)
 	public Offer update(Offer offer) {
 		return offerService.updateOffer(offer);
 	}
+	
+	@RequestMapping(value="/{productId}",method=RequestMethod.DELETE)
+	public String delete(@PathVariable Long productId) {
+		//TODO change to update with active flag.
+		
+		if(productId == null ) {
+			throw new IllegalArgumentException();
+		}
+		offerService.deleteOffer(productId) ;	
+		return productId + " has just been deleted.";
+	}
+	
+	
 	
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public Offer register(Offer offer) {

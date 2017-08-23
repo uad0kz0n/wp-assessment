@@ -13,5 +13,7 @@ public interface OfferService {
 
 	Offer updateOffer(Offer offer);
 
+	void deleteOffer(Long productId);
+
 	 
 }
