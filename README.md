@@ -6,7 +6,7 @@ This application can be run directly in Eclipse.
 It is a maven project, so you may need to maven plugin for eclipse to build and run.
 
 ## Run application
-run com.worldpay.offers.Application in eclipse.
-OR
-$ mvn package
-$ java -jar target/wp-assessment-0.0.1-SNAPSHOT.jar
+run com.worldpay.offers.Application in eclipse.<br/>
+OR<br/>
+$ mvn package<br/>
+$ java -jar target/wp-assessment-0.0.1-SNAPSHOT.jar<br/>
