@@ -3,6 +3,9 @@ package com.worldpay.offers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +19,11 @@ public class OfferController {
 	
 	@Autowired
 	private OfferService offerService;
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+	}
 	
 	@RequestMapping(value="/{productId}",method=RequestMethod.GET)
 	public Offer view(@PathVariable Long productId) {

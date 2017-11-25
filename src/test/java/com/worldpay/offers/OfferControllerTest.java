@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes=com.worldpay.offers.SimpleOfferApplication.class)
 @AutoConfigureMockMvc
 public class OfferControllerTest {
 
@@ -35,7 +35,7 @@ public class OfferControllerTest {
 	@Test
 	public void offer_should_be_return() throws Exception {
 
-		this.mockMvc.perform(get("/offers/5")).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$").isMap());
+		this.mockMvc.perform(get("/offers/ 5")).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$").isMap());
 	}
 
 	@Test
